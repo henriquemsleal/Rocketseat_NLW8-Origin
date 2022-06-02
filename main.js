@@ -1,8 +1,26 @@
+const navigation = document.getElementById('navigation');
+const backToTopButton = document.getElementById('backToTopButton');
+
+window.addEventListener('scroll', onScroll);
+onScroll();
 function onScroll() {
-  if (scrollY > 0) {
+  // console.log(scrollY);
+  showNavOnScroll();
+  showBackToTopButtonOnScroll();
+}
+
+function showNavOnScroll() {
+  if (scrollY > 50) {
     navigation.classList.add('scroll');
   } else {
     navigation.classList.remove('scroll');
+  }
+}
+function showBackToTopButtonOnScroll() {
+  if (scrollY > 250) {
+    backToTopButton.classList.add('show');
+  } else {
+    backToTopButton.classList.remove('show');
   }
 }
 
@@ -20,18 +38,18 @@ ScrollReveal({
   duration: 700,
 }).reveal(
   `
-  #home, 
-  #home img, 
-  #home .stats, 
-  #services,
-  #services header,
-  #services .card
-  #about, 
-  #about header, 
-  #about .content`,
+    #home, 
+    #home img, 
+    #home .stats, 
+    #services,
+    #services header,
+    #services .card
+    #about, 
+    #about header, 
+    #about .content`,
   {
-    delay: 300,
-    duration: 1500,
+    delay: 150,
+    duration: 300,
     reset: true,
   }
 );
