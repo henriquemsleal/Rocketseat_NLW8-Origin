@@ -4,9 +4,32 @@ const backToTopButton = document.getElementById('backToTopButton');
 window.addEventListener('scroll', onScroll);
 onScroll();
 function onScroll() {
-  // console.log(scrollY);
+  // console.log(`scrollY: ${scrollY}`);
   showNavOnScroll();
   showBackToTopButtonOnScroll();
+  activateMenuAtCurrentSection(home);
+  activateMenuAtCurrentSection(services);
+  activateMenuAtCurrentSection(about);
+  activateMenuAtCurrentSection(contact);
+}
+
+function activateMenuAtCurrentSection(section) {
+  const targetLine = scrollY + innerHeight / 2;
+  const sectionTop = section.offsetTop;
+  const sectionHeight = section.offsetHeight;
+  const sectionTopReacheOrPassedTargetLine = targetLine >= sectionTop;
+  // console.log(sectionTopReacheOrPassedTargetLine);
+  const sectionEndsAt = sectionTop + sectionHeight;
+  const sectionEndPassedTargetLine = sectionEndsAt <= targetLine;
+  const sectionBoundaries = sectionTopReacheOrPassedTargetLine && !sectionEndPassedTargetLine;
+  const sectionId = section.getAttribute('id');
+  // console.log(sectionId);
+  const menuElement = document.querySelector(`.menu a[href*=${sectionId}]`);
+  // console.log(menuElement);
+  menuElement.classList.remove('active');
+  if (sectionBoundaries) {
+    menuElement.classList.add('active');
+  }
 }
 
 function showNavOnScroll() {
@@ -21,6 +44,12 @@ function showBackToTopButtonOnScroll() {
     backToTopButton.classList.add('show');
   } else {
     backToTopButton.classList.remove('show');
+  }
+  if (scrollY > footer.offsetTop - innerHeight) {
+    backToTopButton.classList.remove('show');
+    backToTopButton.classList.add('show2');
+  } else {
+    backToTopButton.classList.remove('show2');
   }
 }
 
